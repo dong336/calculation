@@ -20,4 +20,10 @@ public class CurrencylayerController {
 		return "home";
 	}
 	
+	@RequestMapping("test")
+	public String test() {
+		
+		currencylayerService.calculation(Double.parseDouble("100"));
+		return "home";
+	}
 }
