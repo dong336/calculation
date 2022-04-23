@@ -1,10 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<title>Home</title>
 </head>
 <body>
-	Hello, World!
+
+	<h1>환율 계산</h1>
+	<div>송금국가: 미국(USD)</div>
+	<div>수취국가: 
+		<select id="select">
+			<option>=선택=</option>
+			<option value="KRW">한국(KRW)</option>
+			<option value="JPY">일본(JPY)</option>
+			<option value="PHP">필리핀(PHP)</option>
+		</select>
+	</div>
+	<div>환율: 
+		<span id="rate"></span>
+	</div>
+	<div>
+		송금액: 
+		<input id="amount" type="text" value="100"> USD
+	</div>
+	<button id="transfer" type="submit">submit</button>
+	<h3 id="message"></h3>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+	    const data = /*[[${data}]]*/ 'default';
+	    console.log(data);
+	    /*]]>*/
+		
+		const select = document.querySelector('#select');
+		
+	    let selectedRate;
+	    let selectedCurrency;
+		
+		select.addEventListener('change', (event) => {
+			const rate = document.querySelector('#rate');
+			const selected = select.options[select.selectedIndex].value;
+
+			switch(selected){
+			case 'KRW':
+				rate.innerText = data.body.USDKRW + ' KRW/USD';
+				selectedCurrency = 'KRW';
+				selectedRate = data.body.USDKRW;
+				break;
+			case 'JPY':
+				rate.innerText = data.body.USDJPY + ' JPY/USD';
+				selectedCurrency = 'JPY';
+				selectedRate = data.body.USDJPY;
+				break;
+			case 'PHP':
+				rate.innerText = data.body.USDPHP + ' PHP/USD';
+				selectedCurrency = 'PHP';
+				selectedRate = data.body.USDPHP;
+				break;
+			}
+		});
+		
+		const button = document.querySelector('#transfer');
+		const amount = document.querySelector('#amount');
+		
+		button.addEventListener('click', (event) => {
+			const message = document.querySelector('#message');
+			
+			if(data.code != 'SUCCESS'){
+				message.innerText = '시스템 오류가 발생하였습니다.';
+			} else {
+				let params = {
+						"amount": amount.value,
+						"rate": selectedRate,
+						"state": select.options[select.selectedIndex].value
+				};
+				console.log(params);
+				let xhr = new XMLHttpRequest();
+			    xhr.onreadystatechange = function() {
+			    	let response;
+			    	let text;
+			        if (xhr.readyState === xhr.DONE) {
+			            if (xhr.status === 200) {
+			            	response = JSON.parse(xhr.responseText);
+			            	
+			            	message.innerText = response.body;
+			            } else {
+			                console.error(xhr.responseText);
+			            }
+			        }
+			    };
+			    xhr.open('POST', 'http://192.168.0.101:8080/amount/receive');
+				xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			    xhr.send(JSON.stringify(params));
+			}
+		});
+	</script>
 </body>
 </html>

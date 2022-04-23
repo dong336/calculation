@@ -35,7 +35,7 @@ public class CurrencylayerAdapter {
 
 		var responseBody = objectMapper.readValue(response.body().string(), CurrencylayerResponse.class);
 		log.info("responseBody : {}", responseBody);
-		
+		log.info("환율 : {}", responseBody.getQuotes());
 		return responseBody;
 	}
 }
