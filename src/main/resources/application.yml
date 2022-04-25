@@ -4,3 +4,5 @@ spring:
         prefix : classpath:templates/
         suffix : .html
         cache : false
+server:
+  port: 8080
