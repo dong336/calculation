@@ -58,7 +58,7 @@ button.addEventListener('click', (event) => {
 	            }
 	        }
 	    };
-	    xhr.open('POST', 'http://192.168.0.106:8080/amount/receive');
+	    xhr.open('POST', requestURI);
 		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	    xhr.send(JSON.stringify(params));
 	}
