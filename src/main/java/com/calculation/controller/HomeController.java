@@ -5,7 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.calculation.common.AppResponse;
+import com.calculation.common.dto.AppResponse;
+import com.calculation.common.dto.Header;
 import com.calculation.common.enums.CommonCode;
 import com.calculation.service.CalculationService;
 
@@ -34,12 +35,11 @@ public class HomeController {
 	
 	@ExceptionHandler
 	public Object handleHome(Model model, Exception e) {
+		e.printStackTrace();
 		log.error("{}", model.getAttribute(DATA));
 		
 		var data = AppResponse.builder()
-				.code(CommonCode.FAIL.getCode())
-				.message(CommonCode.FAIL.getMessage())
-				.body(null)
+				.header(new Header(CommonCode.FAIL))
 				.build();
 		model.addAttribute(DATA, data);
 		

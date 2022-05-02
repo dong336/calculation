@@ -9,19 +9,19 @@ select.addEventListener('change', (event) => {
 
 	switch(selected){
 	case 'KRW':
-		rate.innerText = data.body.USDKRW + ' KRW/USD';
+		rate.innerText = BODY.USDKRW + ' KRW/USD';
 		selectedCurrency = 'KRW';
-		selectedRate = data.body.USDKRW;
+		selectedRate = BODY.USDKRW;
 		break;
 	case 'JPY':
-		rate.innerText = data.body.USDJPY + ' JPY/USD';
+		rate.innerText = BODY.USDJPY + ' JPY/USD';
 		selectedCurrency = 'JPY';
-		selectedRate = data.body.USDJPY;
+		selectedRate = BODY.USDJPY;
 		break;
 	case 'PHP':
-		rate.innerText = data.body.USDPHP + ' PHP/USD';
+		rate.innerText = BODY.USDPHP + ' PHP/USD';
 		selectedCurrency = 'PHP';
-		selectedRate = data.body.USDPHP;
+		selectedRate = BODY.USDPHP;
 		break;
 	}
 });
@@ -32,7 +32,7 @@ const amount = document.querySelector('#amount');
 button.addEventListener('click', (event) => {
 	const message = document.querySelector('#message');
 	
-	if(data.code != 'SUCCESS'){
+	if(HEADER.code != 'SUCCESS'){
 		message.innerText = '시스템 오류가 발생하였습니다.';
 	} else {
 		let params = {
@@ -40,14 +40,15 @@ button.addEventListener('click', (event) => {
 				"rate": selectedRate,
 				"state": select.options[select.selectedIndex].value
 		};
-/* 		console.log(params); */
 		let xhr = new XMLHttpRequest();
 	    xhr.onreadystatechange = function() {
 	    	let response;
 	        if (xhr.readyState === xhr.DONE) {
+				console.log(xhr.response);
 	            if (xhr.status === 200) {
 	            	response = JSON.parse(xhr.responseText);
-	            	if(response.code != 'SUCCESS'){
+	            	
+	            	if(response.header.code != 'SUCCESS'){
 	            		message.style.color = 'red';
 	            	} else {
 						message.style.color = 'black';
@@ -58,8 +59,10 @@ button.addEventListener('click', (event) => {
 	            }
 	        }
 	    };
+	    
 	    xhr.open('POST', requestURI);
 		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	    xhr.send(JSON.stringify(params));
+	    
 	}
 });

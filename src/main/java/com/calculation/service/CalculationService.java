@@ -3,7 +3,8 @@ package com.calculation.service;
 import org.springframework.stereotype.Service;
 
 import com.calculation.adapter.CurrencylayerAdapter;
-import com.calculation.common.AppResponse;
+import com.calculation.common.dto.AppResponse;
+import com.calculation.common.dto.Header;
 import com.calculation.common.enums.CommonCode;
 import com.calculation.dto.Quotes;
 import com.calculation.dto.ReceivedAmountRequest;
@@ -24,8 +25,7 @@ public class CalculationService {
 		Quotes rates = currencylayerAdapter.getExchangeRate().getQuotes();
 		
 		return AppResponse.builder()
-				.code(CommonCode.SUCCESS.getCode())
-				.message(CommonCode.SUCCESS.getMessage())
+				.header(new Header(CommonCode.SUCCESS))
 				.body(rates)
 				.build();
 	}
@@ -44,14 +44,12 @@ public class CalculationService {
 			String message = "수취금액은 " + separated + " " + request.getState() + " 입니다.";
 			
 			return AppResponse.builder()
-					.code(CommonCode.SUCCESS.getCode())
-					.message(CommonCode.SUCCESS.getMessage())
+					.header(new Header(CommonCode.SUCCESS))
 					.body(message)
 					.build();
 		} catch (Exception e) {
 			return AppResponse.builder()
-					.code(CommonCode.TRANSFER_FAIL.getCode())
-					.message(CommonCode.TRANSFER_FAIL.getMessage())
+					.header(new Header(CommonCode.TRANSFER_FAIL))
 					.body(CommonCode.TRANSFER_FAIL.getMessage())
 					.build();
 		}

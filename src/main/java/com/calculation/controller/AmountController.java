@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.calculation.common.AppResponse;
+import com.calculation.common.dto.AppResponse;
+import com.calculation.common.dto.Header;
 import com.calculation.common.enums.CommonCode;
 import com.calculation.dto.ReceivedAmountRequest;
 import com.calculation.service.CalculationService;
@@ -32,11 +33,10 @@ public class AmountController {
 	
 	@ExceptionHandler
 	public AppResponse handleAmount(Exception e) {
+		e.printStackTrace();
 		
 		return AppResponse.builder()
-				.code(CommonCode.FAIL.getCode())
-				.message(CommonCode.FAIL.getMessage())
-				.body(CommonCode.FAIL.getMessage())
+				.header(new Header(CommonCode.FAIL))
 				.build();
 	}
 }

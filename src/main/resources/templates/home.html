@@ -28,7 +28,8 @@
 	
 	<script th:inline="javascript">
 		/*<![CDATA[*/
-	    const data = /*[[${data}]]*/ 'default';
+	    const HEADER = /*[[${data.header}]]*/ 'default';
+		const BODY = /*[[${data.body}]]*/ 'defauly';
 		const requestURI = "http://192.168.200.142:8080/amount/receive";
 	    /* console.log(data); */
 	    /*]]>*/
