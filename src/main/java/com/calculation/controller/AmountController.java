@@ -28,12 +28,4 @@ public class AmountController {
 //		throw new Exception();
 	}
 	
-//	@ExceptionHandler
-//	public AppResponse handleAmount(Exception e) {
-//		e.printStackTrace();
-//		
-//		return AppResponse.builder()
-//				.header(new Header(CommonCode.FAIL))
-//				.build();
-//	}
 }
