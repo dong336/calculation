@@ -1,14 +1,11 @@
 package com.calculation.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.calculation.common.dto.AppResponse;
-import com.calculation.common.dto.Header;
-import com.calculation.common.enums.CommonCode;
 import com.calculation.dto.ReceivedAmountRequest;
 import com.calculation.service.CalculationService;
 
@@ -31,12 +28,12 @@ public class AmountController {
 //		throw new Exception();
 	}
 	
-	@ExceptionHandler
-	public AppResponse handleAmount(Exception e) {
-		e.printStackTrace();
-		
-		return AppResponse.builder()
-				.header(new Header(CommonCode.FAIL))
-				.build();
-	}
+//	@ExceptionHandler
+//	public AppResponse handleAmount(Exception e) {
+//		e.printStackTrace();
+//		
+//		return AppResponse.builder()
+//				.header(new Header(CommonCode.FAIL))
+//				.build();
+//	}
 }
